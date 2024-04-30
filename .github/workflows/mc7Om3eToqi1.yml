@@ -20,19 +20,18 @@ jobs:
         fetch-depth: 2
       timeout-minutes: 1
 
-    - name: Install git-secrets and jq
-      run: |
-        sudo apt-get install jq
-        sudo apt-get install imagemagick
-      timeout-minutes: 2
-
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20' 
 
-    - name: Install Prettier
-      run: npm install --global prettier
+    - name: Configure Git
+      run: git config --global advice.addIgnoredFile false
+      
+    - name: Install jq and Prettier
+      run: |
+        sudo apt-get install jq
+        npm install --global prettier
       timeout-minutes: 2
 
     - name: 👥 git config
@@ -47,9 +46,9 @@ jobs:
       id: fetch_xpi
       run: |
         JSON=$(curl -s https://api.github.com/repos/violentmonkey/violentmonkey/releases)
-        URL=$(echo "$JSON" | jq -r '[.[] | select(.prerelease==true)][0].assets[] | select(.name | endswith(".xpi")).browser_download_url')
-        echo "XPI_URL=$URL" >> $GITHUB_ENV
-        echo "XPI File: $URL"
+        XPI_URL=$(echo "$JSON" | jq -r '[.[] | select(.prerelease==true)][0].assets[] | select(.name | endswith(".xpi")).browser_download_url')
+        echo "XPI_URL=$XPI_URL" >> $GITHUB_ENV
+        echo "XPI File: $XPI_URL"
       timeout-minutes: 4
 
     - name: 📥 Download and extract .xpi
@@ -61,8 +60,11 @@ jobs:
 
     - name: 🔖 Conditional Tag Handling
       run: |
-        version=$(grep -Po "\"version\"\s*\:\s*\"\K[0-9.]+" release/manifest.json)
-        echo "Extracted version: $version"
+        vmVersion=$(grep -Po "\"version\"\s*\:\s*\"\K[0-9.]+" release/manifest.json)
+        echo "Extracted version: $vmVersion"
+
+        # Set environment variable for use in subsequent steps
+        echo "vmVersion=$vmVersion" >> $GITHUB_ENV
     
         # Fetch tags to check existence
         git fetch --tags
@@ -71,20 +73,27 @@ jobs:
         if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
           echo "<< Manual trigger: delete existing tag if exists and create a new one >>"
           # Manual trigger: delete existing tag if exists and create a new one
-          if git tag -l | grep -q "v$version"; then
-            echo "Tag v$version exists, deleting and recreating..."
-            git tag -d "v$version"
-            git push origin --delete "v$version"
+          if git tag -l | grep -q "v$vmVersion"; then
+            echo "Tag v$vmVersion exists, deleting and recreating..."
+            git tag -d "v$vmVersion"
+            git push origin --delete "v$vmVersion"
           fi
         elif [[ "${{ github.event_name }}" == "schedule" ]]; then
           echo "<< Scheduled trigger: only create tag if not exists >>"
           # Scheduled trigger: only create tag if not exists
-          if git tag -l | grep -q "v$version"; then
-            echo "Tag v$version already exists, not creating new one."
+          if git tag -l | grep -q "v$vmVersion"; then
+            echo "Tag v$vmVersion already exists, not creating new one."
             echo "skip_rest=true" >> $GITHUB_ENV
           fi
         fi
       timeout-minutes: 1
+
+    - name: Install ImageMagick and Monaco Editor
+      if: env.skip_rest == 'false'
+      run: |
+        sudo apt-get install imagemagick
+        npm install monaco-editor@"<1.0.0" # to get files inside /min; AMD bundled, and minified
+      timeout-minutes: 2
 
     - name: 🔧 Unminify JavaScript files
       if: env.skip_rest == 'false'
@@ -98,7 +107,27 @@ jobs:
 
     - name: 🔧 Fix Manifest
       if: env.skip_rest == 'false'
-      run: sed -i 's/Violentmonkey BETA/Violentmonkey RV/g' release/manifest.json
+      run: |
+        sed -i 's/Violentmonkey BETA/Violentmonkey RV/g' release/manifest.json
+        jq 'del(.browser_specific_settings.gecko.update_url)' release/manifest.json > release/manifest_tmp.json && mv release/manifest_tmp.json release/manifest.json
+      timeout-minutes: 1
+
+    - name: 🔧 Fix Version in coder-cm-p.js
+      if: env.skip_rest == 'false'
+      run: |
+        monacoVersion=$(jq -r '.version' ./node_modules/monaco-editor/package.json)
+        echo "monacoVersion=$monacoVersion" >> $GITHUB_ENV
+
+        # Define the file path
+        FILE="release/options/coder-cm-p.js"
+
+        # Define the new string you want to insert
+        NEW_STRING="/public/lib/monaco-editor/$monacoVersion/min/vs"
+
+        echo "vsPath: $NEW_STRING"
+
+        # Use sed to replace the string
+        sed -i "s|vsPath = \".*\";|vsPath = \"$NEW_STRING\";|g" "$FILE"
       timeout-minutes: 1
 
     - name: 🔧 Prepend coder-cm-p.js to options_index.js
@@ -109,6 +138,13 @@ jobs:
         rm release/options/index_tmp.js
       timeout-minutes: 1
 
+    - name: 🔧 Copy Monaco Editor Files to release/public/lib/
+      if: env.skip_rest == 'false'
+      run: |
+        mkdir -p "release/public/lib/monaco-editor/$monacoVersion/min/"
+        cp -r "node_modules/monaco-editor/min" "release/public/lib/monaco-editor/$monacoVersion/"
+      timeout-minutes: 1
+    
     - name: 📥 Git Add
       if: env.skip_rest == 'false'
       run: |
@@ -162,79 +198,67 @@ jobs:
     - name: 🔖 Tag version
       if: env.skip_rest == 'false'
       run: |
-        version=$(grep -Po "\"version\"\s*\:\s*\"\K[0-9.]+" release/manifest.json)
-                
-        echo "Extracted version: $version"
-
         # Debug existing tags
         git fetch --tags
         git tag -l
 
         # Check if the tag exists remotely
-        if git ls-remote --tags origin | grep -q "refs/tags/v$version"; then
-          echo "Tag v$version exists remotely. Deleting..."
-          git push origin --delete "v$version"
+        if git ls-remote --tags origin | grep -q "refs/tags/v$vmVersion"; then
+          echo "Tag v$vmVersion exists remotely. Deleting..."
+          git push origin --delete "v$vmVersion"
         fi
 
         # Check if the tag exists locally
-        if git tag -l | grep -q "v$version"; then
-          echo "Tag v$version exists locally. Deleting..."
-          git tag -d "v$version"
+        if git tag -l | grep -q "v$vmVersion"; then
+          echo "Tag v$vmVersion exists locally. Deleting..."
+          git tag -d "v$vmVersion"
         fi
 
         # Create a new annotated tag
-        echo "Creating new tag v$version"
-        git tag -a "v$version" -m "https://github.com/violentmonkey/violentmonkey/releases/tag/v$version"
+        echo "Creating new tag v$vmVersion"
+        git tag -a "v$vmVersion" -m "https://github.com/violentmonkey/violentmonkey/releases/tag/v$vmVersion"
 
         git push --tags
 
-        # Set environment variable for use in subsequent steps
-        echo "FILE_VER=$version" >> $GITHUB_ENV
-
       timeout-minutes: 1
-
-    - name: Show FILE_VER
-      if: env.skip_rest == 'false'
-      run: |
-        echo "FILE_VER is set to: $FILE_VER"
 
     - name: Package Release Folder
       if: env.skip_rest == 'false'
       run: |
-        echo "Zipping release folder for version $FILE_VER"
-        7z a -r -tzip "Violentmonkey-modified-$FILE_VER.zip" ./release/*
+        echo "Zipping release folder for version $vmVersion"
+        7z a -r -tzip "Violentmonkey-modified-$vmVersion.zip" ./release/*
 
     - name: Upload Artifact
       if: env.skip_rest == 'false'
       uses: actions/upload-artifact@v4
       with:
-        name: "Violentmonkey-modified-${{ env.FILE_VER }}"
-        path: "Violentmonkey-modified-${{ env.FILE_VER }}.zip"
+        name: "Violentmonkey-modified-${{ env.vmVersion }}"
+        path: "Violentmonkey-modified-${{ env.vmVersion }}.zip"
 
 
     - name: Push Tag
       if: env.skip_rest == 'false'
       run: |
-        echo "Pushing new tag v$FILE_VER"
-        git push origin "v$FILE_VER"  # This should match the tag created above
+        echo "Pushing new tag v$vmVersion"
+        git push origin "v$vmVersion"  # This should match the tag created above
 
 
     - name: Create Release
       if: env.skip_rest == 'false'
       id: create_release
       run: |
-        gh release create "v${{ env.FILE_VER }}" \
+        gh release create "v${{ env.vmVersion }}" \
           --draft=false \
           --prerelease=true \
-          --title "Violentmonkey Modified ver ${{ env.FILE_VER }}" \
-          --notes "[https://github.com/violentmonkey/violentmonkey/releases/tag/v${{ env.FILE_VER }}](https://github.com/violentmonkey/violentmonkey/releases/tag/v${{ env.FILE_VER }})"
+          --title "Violentmonkey Modified ver ${{ env.vmVersion }}" \
+          --notes "[https://github.com/violentmonkey/violentmonkey/releases/tag/v${{ env.vmVersion }}](https://github.com/violentmonkey/violentmonkey/releases/tag/v${{ env.vmVersion }})"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload Release Asset
       if: env.skip_rest == 'false'
       run: |
-        gh release upload "v${{ env.FILE_VER }}" "./Violentmonkey-modified-${{ env.FILE_VER }}.zip" \
+        gh release upload "v${{ env.vmVersion }}" "./Violentmonkey-modified-${{ env.vmVersion }}.zip" \
           --clobber
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

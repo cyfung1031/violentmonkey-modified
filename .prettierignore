@@ -1,1 +1,3 @@
 **/*-p.js
+release/public/lib/monaco-editor/*.js
+release/public/lib/monaco-editor/**/*.js

@@ -1,13 +1,6 @@
 (()=>{
-  // coder-cm.js
-  // javascript:((script,ci,b,bu)=>{(ci='d39c598537ba8b58200f933bddce9d060d2387aa')&&fetch(`https://raw.githubusercontent.com/cyfung1031/userscript-supports/${ci}/tools/coder.js`).then(r=>r.text()).then(t=>[(b=new Blob([t],{type:'text/javascript; charset=UTF-8'})),(bu=URL.createObjectURL(b)),(script.src=bu),document.head.appendChild(script)]&&new Promise(r=>script.onload=r)).then(k=>URL.revokeObjectURL(bu)).then(e=>console.log('JS Injected'))})(document.createElement('script'));
-
+  // coder-cm-p.js
   console.log('Coder.js');
-
-  if (typeof mozInnerScreenX === 'number') {
-    console.log('Skip Coder.js for Firefox') // Loading failed for the <script> with source “blob:moz-extension://8258ebd6-d03a-4087-ac07-66b9d99c8f0f/c100eb6d-f193-499d-a90f-39a15741715e”.
-    return;
-  }
 
   const observablePromise = (proc, timeoutPromise) => {
     let promise = null;
@@ -97,30 +90,6 @@
     const urlMap = new Map();
     function globalModify(enabled) {
 
-
-      for (const ElementClass of [HTMLLinkElement, HTMLScriptElement]) {
-        if (!ElementClass.prototype.setAttribute78) {
-
-          const setAttribute = ElementClass.prototype.setAttribute78 = (ElementClass.prototype.setAttribute || HTMLElement.prototype.setAttribute || Element.prototype.setAttribute || Node.prototype.setAttribute || EventTarget.prototype.setAttribute);
-          ElementClass.prototype.setAttribute79 = function (a, b) {
-            if (this instanceof HTMLElement) {
-              if (a === 'href' || a === 'src') {
-                let c = urlMap.get(b);
-                if (c) b = c;
-              }
-              return arguments.length === 2 && typeof this.setAttribute78 === 'function' ? this.setAttribute78(a, b) : setAttribute.apply(this, arguments);
-            }
-          };
-
-        }
-
-        ElementClass.prototype.setAttribute = enabled ? ElementClass.prototype.setAttribute79 : ElementClass.prototype.setAttribute78;
-
-      }
-
-      if (!window.Worker78) window.Worker78 = Worker;
-
-      window.Worker = enabled ? undefined : window.Worker78;
     }
 
 
@@ -197,12 +166,11 @@
 
 
       /** @param {Map} urlMap */
-      function loadResourceWithBlobURL(type, url, urlMap) {
+      function loadResourceByURL(type, url, urlMap) {
 
         return new Promise(resolve => {
-          let b, bu;
-          const mime = type === 'js' ? 'text/javascript; charset=UTF-8' : type === 'css' ? 'text/css; charset=UTF-8' : 'text/plain; charset=UTF-8';
-          fetch(url).then(r => r.text()).then(t => [(b = new Blob([t], { type: mime })), (bu = URL.createObjectURL(b))]).then(() => {
+          let bu = url;
+          Promise.resolve().then(() => {
 
 
             if (type === 'css') {
@@ -236,25 +204,25 @@
         })
       }
 
-      function analyseURL(type, url, urlMap) {
+      // function analyseURL(type, url, urlMap) {
 
-        return new Promise(resolve => {
-          let b, bu;
-          const mime = type === 'js' ? 'text/javascript; charset=UTF-8' : type === 'css' ? 'text/css; charset=UTF-8' : 'text/plain; charset=UTF-8';
-          fetch(url).then(r => r.text()).then(t => [(b = new Blob([t], { type: mime })), (bu = URL.createObjectURL(b))]).then(() => {
+      //   return new Promise(resolve => {
+      //     let b, bu;
+      //     const mime = type === 'js' ? 'text/javascript; charset=UTF-8' : type === 'css' ? 'text/css; charset=UTF-8' : 'text/plain; charset=UTF-8';
+      //     fetch(url).then(r => r.text()).then(t => [(b = new Blob([t], { type: mime })), (bu = URL.createObjectURL(b))]).then(() => {
 
-            if (urlMap) urlMap.set(url, bu);
-            resolve(bu);
+      //       if (urlMap) urlMap.set(url, bu);
+      //       resolve(bu);
 
-          });
+      //     });
 
-        })
+      //   })
 
-      }
+      // }
 
 
 
-      const vsPath = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.48.0/min/vs";
+      const vsPath = "/public/lib/monaco-editor/0.48.0/min/vs";
 
       const editorOptions = {
         automaticLayout: true,
@@ -321,13 +289,6 @@
 
 
       // https://microsoft.github.io/vscode-codicons/dist/codicon.ttf
-      document.head.appendChild(document.createElement('style')).textContent = `                
-          @font-face {
-            font-family: "codicon";
-            font-display: block;
-            src: url("./codicon.ttf?38dcd33a732ebca5a557e04831e9e235") format("truetype");
-          }
-        `;
 
       /*
       await loadResourceWithBlobURL(
@@ -336,18 +297,18 @@
         urlMap,
       );*/
 
-      await analyseURL('js', `${vsPath}/language/typescript/tsWorker.js`, urlMap);
+      // await analyseURL('js', `${vsPath}/language/typescript/tsWorker.js`, urlMap);
 
       // Dynamically load CSS and JS
-      await loadResourceWithBlobURL('css', `${vsPath}/editor/editor.main.css`, urlMap);
-      await loadResourceWithBlobURL('js', `${vsPath}/loader.js`, urlMap);
-      await loadResourceWithBlobURL('js', `${vsPath}/editor/editor.main.nls.js`, urlMap);
-      await loadResourceWithBlobURL('js', `${vsPath}/editor/editor.main.js`, urlMap);
+      await loadResourceByURL('css', `${vsPath}/editor/editor.main.css`, urlMap);
+      await loadResourceByURL('js', `${vsPath}/loader.js`, urlMap);
+      await loadResourceByURL('js', `${vsPath}/editor/editor.main.nls.js`, urlMap);
+      await loadResourceByURL('js', `${vsPath}/editor/editor.main.js`, urlMap);
 
-      await loadResourceWithBlobURL('js', `${vsPath}/basic-languages/javascript/javascript.js`, urlMap);
-      await loadResourceWithBlobURL('js', `${vsPath}/basic-languages/typescript/typescript.js`, urlMap);
-      await loadResourceWithBlobURL('js', `${vsPath}/language/typescript/tsMode.js`, urlMap);
-      await loadResourceWithBlobURL('js', `${vsPath}/language/typescript/tsWorker.js`, urlMap);
+      await loadResourceByURL('js', `${vsPath}/basic-languages/javascript/javascript.js`, urlMap);
+      await loadResourceByURL('js', `${vsPath}/basic-languages/typescript/typescript.js`, urlMap);
+      await loadResourceByURL('js', `${vsPath}/language/typescript/tsMode.js`, urlMap);
+      await loadResourceByURL('js', `${vsPath}/language/typescript/tsWorker.js`, urlMap);
 
 
       await darkThemeChecked.then();

@@ -11,3 +11,6 @@ log/
 .DS_Store?
 ehthumbs.db
 Thumbs.db
+
+# Workflow Action NPM
+node_modules/
