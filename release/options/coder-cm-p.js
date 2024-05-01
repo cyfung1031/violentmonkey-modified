@@ -1,4 +1,4 @@
-(()=>{
+(() => {
   // coder-cm-p.js
   console.log('Coder.js');
 
@@ -165,125 +165,150 @@
 
 
 
-      /** @param {Map} urlMap */
-      function loadResourceByURL(type, url, urlMap) {
+    /** @param {Map} urlMap */
+    function loadResourceByURL(type, url, urlMap) {
 
-        return new Promise(resolve => {
-          let bu = url;
-          Promise.resolve().then(() => {
+      return new Promise(resolve => {
+        let bu = url;
+        Promise.resolve().then(() => {
 
 
-            if (type === 'css') {
-              var link = document.createElement('link');
-              link.dataset.url = url;
-              var onload = function () {
-                link.removeEventListener('load', onload, false);
-                if (urlMap) urlMap.set(url, bu);
-                resolve(bu);
-              }
-              link.addEventListener('load', onload, false);
-              link.rel = 'stylesheet';
-              link.href = bu;
-              document.head.appendChild(link);
-            } else if (type === 'js') {
-              var script = document.createElement('script');
-              script.dataset.url = url;
-              var onload = function () {
-                script.removeEventListener('load', onload, false);
-                if (urlMap) urlMap.set(url, bu);
-                resolve(bu);
-              }
-              script.addEventListener('load', onload, false);
-              script.src = bu;
-              document.head.appendChild(script);
+          if (type === 'css') {
+            var link = document.createElement('link');
+            link.dataset.url = url;
+            var onload = function () {
+              link.removeEventListener('load', onload, false);
+              if (urlMap) urlMap.set(url, bu);
+              resolve(bu);
             }
-
-
-          });
-
-        })
-      }
-
-      // function analyseURL(type, url, urlMap) {
-
-      //   return new Promise(resolve => {
-      //     let b, bu;
-      //     const mime = type === 'js' ? 'text/javascript; charset=UTF-8' : type === 'css' ? 'text/css; charset=UTF-8' : 'text/plain; charset=UTF-8';
-      //     fetch(url).then(r => r.text()).then(t => [(b = new Blob([t], { type: mime })), (bu = URL.createObjectURL(b))]).then(() => {
-
-      //       if (urlMap) urlMap.set(url, bu);
-      //       resolve(bu);
-
-      //     });
-
-      //   })
-
-      // }
-
-
-
-      const vsPath = "/public/lib/monaco-editor/0.48.0/min/vs";
-
-      const editorOptions = {
-        automaticLayout: true,
-        foldingStrategy: 'indentation',
-        lineNumbers: 'on',
-        readOnly: false,
-        minimap: {
-          enabled: false,
-        },
-        cursorStyle: 'line',
-        scrollBeyondLastLine: false,
-        showUnused: true,
-        showDeprecated: true,
-      };
-
-      const compilerOptions = {
-        allowNonTsExtensions: true,
-        checkJs: true,
-        noImplicitAny: true,
-
-        allowJs: true,
-        noUnusedLocals: false,
-        noFallthroughCasesInSwitch: false,
-        noImplicitThis: false,
-
-      };
-
-      const cssText01 = `
-            .monaco-editor-container{
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                /*display: none;*/
+            link.addEventListener('load', onload, false);
+            link.rel = 'stylesheet';
+            link.href = bu;
+            document.head.appendChild(link);
+          } else if (type === 'js') {
+            var script = document.createElement('script');
+            script.dataset.url = url;
+            var onload = function () {
+              script.removeEventListener('load', onload, false);
+              if (urlMap) urlMap.set(url, bu);
+              resolve(bu);
             }
-            [monaco-editor-status="1"] .monaco-editor-container{
-                display: block;
-            }
-            [monaco-editor-status="1"] .monaco-controlled-textarea{
-                display: none;
-            }
-            [monaco-editor-status="2"] .monaco-editor-container{
-                display: none;
-            }
-            [monaco-editor-status="2"] .monaco-controlled-textarea{
-                display: block;
-            }
-        
-        
-            .editor-code {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                flex-grow: 1;
-            }
-        
-            .editor-code.flex-auto>div.monaco-editor-container {
-                position: relative;
-                flex-grow: 1;
-            }
-  
-        `;
+            script.addEventListener('load', onload, false);
+            script.src = bu;
+            document.head.appendChild(script);
+          }
+
+
+        });
+
+      })
+    }
+
+    // function analyseURL(type, url, urlMap) {
+
+    //   return new Promise(resolve => {
+    //     let b, bu;
+    //     const mime = type === 'js' ? 'text/javascript; charset=UTF-8' : type === 'css' ? 'text/css; charset=UTF-8' : 'text/plain; charset=UTF-8';
+    //     fetch(url).then(r => r.text()).then(t => [(b = new Blob([t], { type: mime })), (bu = URL.createObjectURL(b))]).then(() => {
+
+    //       if (urlMap) urlMap.set(url, bu);
+    //       resolve(bu);
+
+    //     });
+
+    //   })
+
+    // }
+
+
+
+    const vsPath = "/public/lib/monaco-editor/0.48.0/min/vs";
+
+    const editorOptions = {
+      automaticLayout: true,
+      foldingStrategy: 'indentation',
+      lineNumbers: 'on',
+      readOnly: false,
+      minimap: {
+        enabled: false,
+      },
+      cursorStyle: 'line',
+      scrollBeyondLastLine: false,
+      showUnused: true,
+      showDeprecated: true,
+    };
+
+    const compilerOptions = {
+      allowNonTsExtensions: true,
+      checkJs: true,
+      noImplicitAny: true,
+
+      allowJs: true,
+      noUnusedLocals: false,
+      noFallthroughCasesInSwitch: false,
+      noImplicitThis: false,
+
+    };
+
+    const cssText01 = `
+        .monaco-editor-container{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /*display: none;*/
+        }
+        [monaco-editor-status="1"] .monaco-editor-container{
+            display: block;
+        }
+        [monaco-editor-status="1"] .monaco-controlled-textarea{
+            display: none;
+        }
+        [monaco-editor-status="2"] .monaco-editor-container{
+            display: none;
+        }
+        [monaco-editor-status="2"] .monaco-controlled-textarea{
+            display: block;
+        }
+    
+    
+        .editor-code {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            height: 0;
+        }
+
+        @supports not (contain: strict) {
+          .monaco-editor-container {
+              display: block;
+              position: absolute;
+              width: 100%;
+              height: 100%;
+          }
+        }
+    
+        @supports (contain: strict) {
+          .monaco-editor-container {
+              display: block;
+              position: relative;
+              contain: strict;
+              width: 100%;
+              height: 100%;
+          }
+        }
+
+        html body .edit.frame[class] > .flex.flex-col:last-child {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+          height: 0;
+        }
+
+        textarea.inputarea.monaco-mouse-cursor-text[class] {
+          opacity: 0;
+        }
+    `;
 
     const firstInjection = async () => {
 
@@ -329,9 +354,11 @@
     let cmObj = null;
     let byPass = false;
 
+    let lastTabSize = null;
+
     async function createEditor(cmTextArea, containerSetup) {
 
-      if(elmSet && elmSet.container){
+      if (elmSet && elmSet.container) {
 
         byPass = true;
 
@@ -345,14 +372,17 @@
         container.style.display = '';
         const editor = elmSet.editor;
 
-        oldValue = cmTextArea.value;
-        editor.getModel().setValue(cmTextArea.value);
-        oldValue = cmTextArea.value;
+        const value = cmTextArea.value;
+        oldValue = value;
+        editor.getModel().setValue(value);
+        oldValue = value;
 
         const theme = document.documentElement.hasAttribute('dark') ? 'vs-dark' : 'vs';
         monaco.editor.setTheme(theme);
 
         containerSetup(container);
+
+        editor.updateTabSize(value);
 
         byPass = false;
         return;
@@ -385,87 +415,109 @@
       const codeLang = 'javascript';
 
 
-        cmObj && globalModify(1);
-        if (!isInjected) await firstInjection();
+      cmObj && globalModify(1);
+      if (!isInjected) await firstInjection();
 
-        monaco.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign({
-          target: monaco.languages.typescript.ScriptTarget.ES2018,
-        }, compilerOptions));
+      monaco.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign({
+        target: monaco.languages.typescript.ScriptTarget.ES2018,
+      }, compilerOptions));
 
-        const container = document.createElement('div');
-        container.className = 'monaco-editor-container';
-        container.style.display = 'none';
-        containerSetup(container);
+      const container = document.createElement('div');
+      container.className = 'monaco-editor-container';
+      container.style.display = 'none';
+      containerSetup(container);
 
-        elmSet.cmTextArea = cmTextArea;
-        elmSet.container = container;
+      elmSet.cmTextArea = cmTextArea;
+      elmSet.container = container;
 
-        if (cmTextArea.style.display) cmTextArea.style.display = '';
+      if (cmTextArea.style.display) cmTextArea.style.display = '';
 
-        const monacoLangs = {
-          'javascript': 'javascript',
-          'css': 'css',
-        };
+      const monacoLangs = {
+        'javascript': 'javascript',
+        'css': 'css',
+      };
 
-        const monacoLang = monacoLangs[codeLang];
+      const monacoLang = monacoLangs[codeLang];
 
-        monaco.editor.onDidCreateEditor(function (event) {
-          if(byPass || !cmObj) return;
-          const container = ((elmSet || 0).container || 0);
-          if (!container) return;
-          container.style.display = '';
-          // console.log('editor created');
-        });
-
-
-        const editor = monaco.editor.create(container, Object.assign({
-          value: '',
-          language: monacoLang
-        }, editorOptions));
-        
-        editor.getModel().setValue(cmTextArea.value);
-
-        elmSet.editor = editor;
+      const value0 = cmTextArea.value;
+      monaco.editor.onDidCreateEditor(function (event) {
+        if (byPass || !cmObj) return;
+        const container = ((elmSet || 0).container || 0);
+        if (!container) return;
+        container.style.display = '';
+        // console.log('editor created');
+      });
 
 
-        const theme = document.documentElement.hasAttribute('dark') ? 'vs-dark' : 'vs';
-        monaco.editor.setTheme(theme);
+      const editor = monaco.editor.create(container, Object.assign({
+        value: '',
+        language: monacoLang
+      }, editorOptions));
 
-        // window.cm = cm;
-        // window.cmBox = cmBox;
+      editor.getModel().setValue(value0);
+      editor.updateTabSize = updateTabSize;
+      editor.updateTabSize(value0);
 
-        oldValue = editor.getValue();
-        editor.onDidChangeModelContent(e => {
-          if(byPass || !cmObj) return;
-          const editor = ((elmSet || 0).editor || 0);
-          if (!editor) return;
-          const value = editor.getValue();
-          if (value === oldValue) return;
-          oldValue = value;
+      elmSet.editor = editor;
+
+
+      const theme = document.documentElement.hasAttribute('dark') ? 'vs-dark' : 'vs';
+      monaco.editor.setTheme(theme);
+
+      // window.cm = cm;
+      // window.cmBox = cmBox;
+
+      oldValue = editor.getValue();
+      let lz = 0;
+      editor.onDidChangeModelContent(e => {
+        if (byPass || !cmObj) return;
+        const editor = ((elmSet || 0).editor || 0);
+        if (!editor) return;
+        const value = editor.getValue();
+        if (value === oldValue) return;
+        oldValue = value;
+        let tz = ++lz;
+        requestAnimationFrame(() => {
+          if (tz !== lz) return;
           const cmTextArea = elmSet ? elmSet.cmTextArea : null;
-          if(cmTextArea){
+          if (cmTextArea) {
             elmSet.cmTextArea.value = value;
           }
           const cm = cmObj;
-          if(cm) {
+          if (cm) {
             cm.replaceRange(" ", { line: 0, ch: 0 });
             cm.setValue(value);
           }
+          editor.updateTabSize(value);
         });
+      });
 
 
-        getEditor = ()=>editor;
- 
+      getEditor = () => editor;
+
+      function updateTabSize (value){
+        const editor = this;
+        const m = /[\r\n](\x20{4}|\x20{2})[A-Za-z]+/.exec(value);
+        if (m) {
+          const k = m[1].length;
+          if (lastTabSize !== k) {
+            lastTabSize = k;
+            editor.updateOptions({
+              tabSize: k
+            });
+          }
+        }
+      };
 
 
     }
 
-    const idlePreload = async ()=>{
+    const idlePreload = async () => {
       if (location.hash === '#settings') return;
-      if(promiseReady) await promiseReady.then();
-      if(!elmSet || !elmSet.editor){
+      if (promiseReady) await promiseReady.then();
+      if (!elmSet || !elmSet.editor) {
         promiseReady = new PromiseExternal();
-        await createEditor(document.createElement('textarea'),()=>{
+        await createEditor(document.createElement('textarea'), () => {
         });
         injected = true;
         promiseReady.resolve();
@@ -483,15 +535,34 @@
       }
     }, false);
 
+    const noscript = document.createElement('noscript')
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.setAttribute('element-visible', '')
+          const cmBox = entry.target.querySelector('.CodeMirror')
+          if (cmBox) cmBox.removeAttribute('cm-checked')
+          if (noscript.isConnected) noscript.remove(); else document.documentElement.appendChild(noscript);
+        } else {
+          entry.target.removeAttribute('element-visible')
+        }
+      }
+    }, {
+      root: null,
+      rootMargin: "0px",
+      threshold: [0.05, 0.95]
+    });
+
     while (1) {
 
       const cmBox = await observablePromise(() => [...document.querySelectorAll('.CodeMirror:not([cm-checked])')].filter(e => e.CodeMirror && typeof e.CodeMirror.getValue === 'function' && typeof e.CodeMirror.setValue === 'function')[0]).obtain();
-      const cm = cmBox.CodeMirror;
+      cmBox && cmBox.setAttribute('cm-checked', '');
+      const cm = cmBox ? cmBox.CodeMirror : null;
       if (!cm) return;
+      io.observe(cmBox.parentElement);
 
-      if(promiseReady) await promiseReady.then();
+      if (promiseReady) await promiseReady.then();
       promiseReady = new PromiseExternal();
-      cmBox.setAttribute('cm-checked', '');
 
       lastCMBox = cmBox;
       cmObj = cm;
@@ -501,10 +572,10 @@
       });
 
       let cmTextArea;
-      if(elmSet && elmSet.cmTextArea){
+      if (elmSet && elmSet.cmTextArea) {
         cmTextArea = elmSet.cmTextArea;
         cmTextArea.value = cm.getValue();
-      }else{
+      } else {
         cmTextArea = document.createElement('textarea');
         cmTextArea.value = cm.getValue();
         Object.assign(cmTextArea.style, {
@@ -520,9 +591,9 @@
         document.body.appendChild(cmTextArea);
       }
 
-      
 
-      await createEditor(cmTextArea, (container)=>{
+
+      await createEditor(cmTextArea, (container) => {
         cmBox.parentNode.insertBefore(container, cmBox);
       });
 
