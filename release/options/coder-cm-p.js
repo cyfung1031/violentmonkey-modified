@@ -304,6 +304,10 @@
           flex-grow: 1;
           height: 0;
         }
+
+        textarea.inputarea.monaco-mouse-cursor-text[class] {
+          opacity: 0;
+        }
     `;
 
     const firstInjection = async () => {
