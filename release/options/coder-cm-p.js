@@ -366,14 +366,17 @@
         container.style.display = '';
         const editor = elmSet.editor;
 
-        oldValue = cmTextArea.value;
-        editor.getModel().setValue(cmTextArea.value);
-        oldValue = cmTextArea.value;
+        const value = cmTextArea.value;
+        oldValue = value;
+        editor.getModel().setValue(value);
+        oldValue = value;
 
         const theme = document.documentElement.hasAttribute('dark') ? 'vs-dark' : 'vs';
         monaco.editor.setTheme(theme);
 
         containerSetup(container);
+
+        editor.updateTabSize(value);
 
         byPass = false;
         return;
@@ -430,6 +433,7 @@
 
       const monacoLang = monacoLangs[codeLang];
 
+      const value0 = cmTextArea.value;
       monaco.editor.onDidCreateEditor(function (event) {
         if (byPass || !cmObj) return;
         const container = ((elmSet || 0).container || 0);
@@ -444,7 +448,9 @@
         language: monacoLang
       }, editorOptions));
 
-      editor.getModel().setValue(cmTextArea.value);
+      editor.getModel().setValue(value0);
+      editor.updateTabSize = updateTabSize;
+      editor.updateTabSize(value0);
 
       elmSet.editor = editor;
 
@@ -456,6 +462,8 @@
       // window.cmBox = cmBox;
 
       oldValue = editor.getValue();
+      let lastTabSize = null;
+      let lz = 0;
       editor.onDidChangeModelContent(e => {
         if (byPass || !cmObj) return;
         const editor = ((elmSet || 0).editor || 0);
@@ -463,20 +471,38 @@
         const value = editor.getValue();
         if (value === oldValue) return;
         oldValue = value;
-        const cmTextArea = elmSet ? elmSet.cmTextArea : null;
-        if (cmTextArea) {
-          elmSet.cmTextArea.value = value;
-        }
-        const cm = cmObj;
-        if (cm) {
-          cm.replaceRange(" ", { line: 0, ch: 0 });
-          cm.setValue(value);
-        }
+        let tz = ++lz;
+        requestAnimationFrame(() => {
+          if (tz !== lz) return;
+          const cmTextArea = elmSet ? elmSet.cmTextArea : null;
+          if (cmTextArea) {
+            elmSet.cmTextArea.value = value;
+          }
+          const cm = cmObj;
+          if (cm) {
+            cm.replaceRange(" ", { line: 0, ch: 0 });
+            cm.setValue(value);
+          }
+          editor.updateTabSize(value);
+        });
       });
 
 
       getEditor = () => editor;
 
+      function updateTabSize (value){
+        const editor = this;
+        const m = /[\r\n](\x20{4}|\x20{2})[A-Za-z]+/.exec(value);
+        if (m) {
+          const k = m[1].length;
+          if (lastTabSize !== k) {
+            lastTabSize = k;
+            editor.updateOptions({
+              tabSize: k
+            });
+          }
+        }
+      };
 
 
     }

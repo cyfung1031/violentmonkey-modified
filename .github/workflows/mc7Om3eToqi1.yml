@@ -92,8 +92,18 @@ jobs:
       if: env.skip_rest == 'false'
       run: |
         sudo apt-get install imagemagick
-        npm install monaco-editor@"<1.0.0" # to get files inside /min; AMD bundled, and minified
+        # npm install monaco-editor@"<1.0.0" # to get files inside /min; AMD bundled, and minified
+        npm install monaco-editor@"0.30.1" # to get files inside /min; AMD bundled, and minified
+        # npm install monaco-editor@"0.21.3" # to get files inside /min; AMD bundled, and minified
+        # npm install monaco-editor@"0.20.0" # to get files inside /min; AMD bundled, and minified
       timeout-minutes: 2
+      #   0.48.0		127,217
+      #   0.44.0		91,347
+      #   0.47.0		84,663
+      #   0.45.0		73,568
+      #   0.30.1		69,324
+      #   0.33.0		62,669
+      #   0.38.0		62,436
 
     - name: 🔧 Unminify JavaScript files
       if: env.skip_rest == 'false'
