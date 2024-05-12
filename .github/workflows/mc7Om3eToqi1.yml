@@ -93,8 +93,8 @@ jobs:
       run: |
         sudo apt-get install imagemagick
         # npm install monaco-editor@"<1.0.0" # to get files inside /min; AMD bundled, and minified
-        # npm install monaco-editor@"0.30.1" # to get files inside /min; AMD bundled, and minified
-        npm install monaco-editor@"0.21.3" # to get files inside /min; AMD bundled, and minified
+        npm install monaco-editor@"0.30.1" # to get files inside /min; AMD bundled, and minified
+        # npm install monaco-editor@"0.21.3" # to get files inside /min; AMD bundled, and minified
         # npm install monaco-editor@"0.20.0" # to get files inside /min; AMD bundled, and minified
       timeout-minutes: 2
       #   0.48.0		127,217
