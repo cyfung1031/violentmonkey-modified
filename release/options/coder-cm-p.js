@@ -354,6 +354,8 @@
     let cmObj = null;
     let byPass = false;
 
+    let lastTabSize = null;
+
     async function createEditor(cmTextArea, containerSetup) {
 
       if (elmSet && elmSet.container) {
@@ -466,7 +468,6 @@
       // window.cmBox = cmBox;
 
       oldValue = editor.getValue();
-      let lastTabSize = null;
       let lz = 0;
       editor.onDidChangeModelContent(e => {
         if (byPass || !cmObj) return;
