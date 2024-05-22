@@ -63,27 +63,35 @@ jobs:
         vmVersion=$(grep -Po "\"version\"\s*\:\s*\"\K[0-9.]+" release/manifest.json)
         echo "Extracted version: $vmVersion"
 
+        vmVersion="${vmVersion}"
+        echo "Final version with suffix: $vmVersion"
+
         # Set environment variable for use in subsequent steps
         echo "vmVersion=$vmVersion" >> $GITHUB_ENV
-    
+        
         # Fetch tags to check existence
         git fetch --tags
-    
+        
         # Different actions based on trigger
         if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
           echo "<< Manual trigger: delete existing tag if exists and create a new one >>"
           # Manual trigger: delete existing tag if exists and create a new one
-          if git tag -l | grep -q "v$vmVersion"; then
+          if git tag -l | grep -q "^v$vmVersion$"; then
             echo "Tag v$vmVersion exists, deleting and recreating..."
             git tag -d "v$vmVersion"
             git push origin --delete "v$vmVersion"
           fi
+          git tag "v$vmVersion"
+          git push origin "v$vmVersion"
         elif [[ "${{ github.event_name }}" == "schedule" ]]; then
           echo "<< Scheduled trigger: only create tag if not exists >>"
           # Scheduled trigger: only create tag if not exists
-          if git tag -l | grep -q "v$vmVersion"; then
+          if git tag -l | grep -q "^v$vmVersion$"; then
             echo "Tag v$vmVersion already exists, not creating new one."
             echo "skip_rest=true" >> $GITHUB_ENV
+          else
+            git tag "v$vmVersion"
+            git push origin "v$vmVersion"
           fi
         fi
       timeout-minutes: 1
@@ -236,13 +244,11 @@ jobs:
         name: "Violentmonkey-modified-${{ env.vmVersion }}"
         path: "Violentmonkey-modified-${{ env.vmVersion }}.zip"
 
-
     - name: Push Tag
       if: env.skip_rest == 'false'
       run: |
         echo "Pushing new tag v$vmVersion"
         git push origin "v$vmVersion"  # This should match the tag created above
-
 
     - name: Create Release
       if: env.skip_rest == 'false'
@@ -263,4 +269,3 @@ jobs:
           --clobber
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
