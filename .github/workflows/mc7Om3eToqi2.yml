@@ -45,8 +45,8 @@ jobs:
     - name: 📥 Fetch latest pre-release .xpi URL
       id: fetch_xpi
       run: |
-        JSON=$(curl -s https://api.github.com/repos/violentmonkey/violentmonkey/releases)
-        XPI_URL=$(echo "$JSON" | jq -r '[.[] | select(.draft==false)][0].assets[] | select(.name | endswith(".xpi") or endswith(".zip")).browser_download_url')
+        JSON=$( curl -s https://api.github.com/repos/violentmonkey/violentmonkey/releases )
+        XPI_URL=$(echo "$JSON" | jq -r '[.[] | select(.draft==false)][0].assets[] | select(.name | endswith(".xpi") or endswith(".zip")).browser_download_url' | head -n 1)
         echo "XPI_URL=$XPI_URL" >> $GITHUB_ENV
         echo "XPI File: $XPI_URL"
       timeout-minutes: 4
