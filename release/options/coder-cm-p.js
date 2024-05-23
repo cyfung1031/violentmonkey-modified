@@ -535,15 +535,34 @@
       }
     }, false);
 
+    const noscript = document.createElement('noscript')
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.setAttribute('element-visible', '')
+          const cmBox = entry.target.querySelector('.CodeMirror')
+          if (cmBox) cmBox.removeAttribute('cm-checked')
+          if (noscript.isConnected) noscript.remove(); else document.documentElement.appendChild(noscript);
+        } else {
+          entry.target.removeAttribute('element-visible')
+        }
+      }
+    }, {
+      root: null,
+      rootMargin: "0px",
+      threshold: [0.05, 0.95]
+    });
+
     while (1) {
 
       const cmBox = await observablePromise(() => [...document.querySelectorAll('.CodeMirror:not([cm-checked])')].filter(e => e.CodeMirror && typeof e.CodeMirror.getValue === 'function' && typeof e.CodeMirror.setValue === 'function')[0]).obtain();
-      const cm = cmBox.CodeMirror;
+      cmBox && cmBox.setAttribute('cm-checked', '');
+      const cm = cmBox ? cmBox.CodeMirror : null;
       if (!cm) return;
+      io.observe(cmBox.parentElement);
 
       if (promiseReady) await promiseReady.then();
       promiseReady = new PromiseExternal();
-      cmBox.setAttribute('cm-checked', '');
 
       lastCMBox = cmBox;
       cmObj = cm;
