@@ -222,7 +222,7 @@
 
 
 
-    const vsPath = "/public/lib/monaco-editor/0.48.0/min/vs";
+    const vsPath = "/public/lib/monaco-editor/0.51.0/min/vs";
 
     const editorOptions = {
       automaticLayout: true,
