@@ -1,0 +1,752 @@
+{
+  "buttonApply": {
+    "message": "Uygula"
+  },
+  "buttonCancel": {
+    "message": "İptal"
+  },
+  "buttonClose": {
+    "message": "Kapat"
+  },
+  "buttonDisable": {
+    "message": "Devre dışı bırak"
+  },
+  "buttonEdit": {
+    "message": "Düzenle"
+  },
+  "buttonEditClickHint": {
+    "message": "Ayrıca betik adına sağ tıklayabilir, Ctrl tuşuna basarak tıklayabilir veya tekerlekle tıklayabilirsiniz."
+  },
+  "buttonEmptyRecycleBin": {
+    "message": "Geri dönüşüm kutusunu hemen boşalt!"
+  },
+  "buttonEnable": {
+    "message": "Etkinleştir"
+  },
+  "buttonExportData": {
+    "message": "Zip olarak dışarı aktar"
+  },
+  "buttonHome": {
+    "message": "Ana sayfa"
+  },
+  "buttonImportData": {
+    "message": "Zip dosyasından içeri aktar"
+  },
+  "buttonInstallFromURL": {
+    "message": "URL'den yükle"
+  },
+  "buttonNew": {
+    "message": "Yeni"
+  },
+  "buttonOK": {
+    "message": "Tamam"
+  },
+  "buttonRecycleBin": {
+    "message": "Geri Dönüşüm Kutusu"
+  },
+  "buttonRemove": {
+    "message": "Kaldır"
+  },
+  "buttonReplace": {
+    "message": "Değiştir"
+  },
+  "buttonReplaceAll": {
+    "message": "Tümü"
+  },
+  "buttonReset": {
+    "message": "Sıfırla"
+  },
+  "buttonResetSettings": {
+    "message": "Ayarları sıfırla"
+  },
+  "buttonRestore": {
+    "message": "Geri yükle"
+  },
+  "buttonSave": {
+    "message": "Kaydet"
+  },
+  "buttonSaveClose": {
+    "message": "Kaydet ve kapat"
+  },
+  "buttonSaved": {
+    "message": "Kaydedildi"
+  },
+  "buttonShowEditorState": {
+    "message": "Düzenleyici durumunu göster"
+  },
+  "buttonSupport": {
+    "message": "Destek sayfası"
+  },
+  "buttonUndo": {
+    "message": "Geri al"
+  },
+  "buttonUpdate": {
+    "message": "Güncelle"
+  },
+  "buttonVacuum": {
+    "message": "Veritabanını vakumla"
+  },
+  "buttonVacuumed": {
+    "message": "Veriler vakumlandı"
+  },
+  "buttonVacuuming": {
+    "message": "Veriler vakumlanıyor..."
+  },
+  "confirmManualUpdate": {
+    "message": "Bu betik için otomatik güncelleme devre dışı!\nYine de güncellemek isterseniz Tamam'a tıklayın."
+  },
+  "confirmNotSaved": {
+    "message": "Değişiklikler kaydedilmedi!\nGöz ardı etmek için Tamam'a, düzenlemeye devam etmek için İptal'e tıklayın."
+  },
+  "confirmUndoImport": {
+    "message": "Veritabanında yapılan tüm değişiklikleri geri al (içe aktarma, güncelleme, düzenleme, özelleştirme)"
+  },
+  "descBlacklist": {
+    "message": "Enjeksiyon kara listesi (Eşleşen sitelerdeki betikler çalışmayacaktır)"
+  },
+  "descBlacklistNet": {
+    "message": "Ağ kara listesi (Betikler eşleşen sitelere ve o sitelerin çerezlerine bağlanmayacaktır)"
+  },
+  "descCustomCSS": {
+    "message": "Seçenekler sayfası ve betik yükleme sayfası için özelleştirilmiş CSS. Ne işe yaradığını bilmiyorsanız lütfen burayı düzenlemeyin."
+  },
+  "descEditorOptions": {
+    "message": "CodeMirror için ve JSON eklentileri için <code>{\"indentUnit\":2, \"smartIndent\":true}</code> gibi özelleştirilmiş ayarlar. Bazılarının Violentmonkey'de çalışmayabileceğini unutmayın. Tüm listeyi görmek için <a href=\"https://codemirror.net/doc/manual.html#config\" target=\"_blank\" rel=\"noopener noreferrer\">tıklayın</a>."
+  },
+  "descEditorOptionsGeneric": {
+    "message": "Boolean options may be toggled by double-clicking on the value: <code>true</code> = enabled, <code>false</code> = disabled. Numeric options ending with <code>Delay</code>, <code>Interval</code>, <code>Rate</code>, <code>Time</code> are in milliseconds."
+  },
+  "descEditorOptionsVM": {
+    "message": "Nonstandard options: <code>autocompleteOnTyping</code> is a delay in milliseconds to display autocomplete hints after typing (<code>0</code> = disable), <code>killTrailingSpaceOnSave</code> automatically removes trailing spaces in each line when saving, <code>showTrailingSpace</code> shows the trailing spaces as dots."
+  },
+  "descScriptTemplate": {
+    "message": "Desteklenen değerler: <{{name}}>, <{{url}}>, <{{date}}>, MomentJS uyumlu biçimde <{{date:format}}> (örn. <{{date:YYYY-AA-GG}}>)."
+  },
+  "editHelpDocumention": {
+    "message": "Kullanıcı betiği meta veri bloku ve <code>GM</code> API belgeleri:"
+  },
+  "editHelpKeyboard": {
+    "message": "Klavye kısayolları:"
+  },
+  "editHowToHint": {
+    "message": "Başka düzenleyici kullan?"
+  },
+  "editLabelMeta": {
+    "message": "Özel meta veriler"
+  },
+  "editLabelSettings": {
+    "message": "Betik ayarları"
+  },
+  "editLongLine": {
+    "message": "Satır çok uzun"
+  },
+  "editLongLineTooltip": {
+    "message": "Bu satır çok uzun olduğundan dolayı düzenleme yaparken yaşanabilecek gecikmeleri önlemek için daraltıldı.\nGelişmiş ayarlar bölümünden bu limiti değiştirebilirsiniz. Örneğin:\n\"maxDisplayLength\": 20000"
+  },
+  "editNavCode": {
+    "message": "Kod"
+  },
+  "editNavSettings": {
+    "message": "Ayarlar"
+  },
+  "editNavValues": {
+    "message": "Değerler"
+  },
+  "editValueAllHint": {
+    "message": "Betiğin tüm değerler deposunu göster/düzenle"
+  },
+  "extDescription": {
+    "message": "Birçok tarayıcıyı destekleyen açık kaynak kodlu bir kullanıcı betiği yöneticisi"
+  },
+  "extName": {
+    "message": "Violentmonkey"
+  },
+  "failureReasonBlacklisted": {
+    "message": "Violentmonkey ayarlarında kara listede"
+  },
+  "failureReasonNoninjectable": {
+    "message": "Violentmonkey bu sayfada kullanıcı betiklerini çalıştıramıyor\n(olağan şüpheliler: tarayıcı arayüzü, uzantı sayfası, ilkeler aracılığıyla engelleme, Opera'da arama motoru sayfası)"
+  },
+  "failureReasonRestarted": {
+    "message": "Violentmonkey yeniden başlatıldı. Kullanıcı betiklerini çalıştırmak için lütfen sekmeyi yenileyin."
+  },
+  "fileInstallBlocked": {
+    "message": "Yerel bir dosyadaki düzenlemeleri yüklemek veya izlemek için birkaç yöntem vardır: \n<1>Dosyayı, bu da dahil olmak üzere açık bir Violentmonkey sayfasına veya açılır penceresine sürükleyip bırakın. <2>Bu dosya için yerel bir HTTP sunucusu kurun ve http://localhost üzerinden açın. <3>chrome://extensions sayfasındaki Violentmonkey ayrıntılarında \"Dosya URL'lerine erişime izin ver\" seçeneğini etkinleştirin. Bu tehlikelidir çünkü herhangi bir kullanıcı betiği herhangi bir yerel dosyayı okuyabilir."
+  },
+  "filterAlphabeticalOrder": {
+    "message": "alfabetik olarak"
+  },
+  "filterExecutionOrder": {
+    "message": "çalıştırma sırasına göre"
+  },
+  "filterLastUpdateOrder": {
+    "message": "son güncelleme zamanına göre"
+  },
+  "filterSize": {
+    "message": "boyuta göre"
+  },
+  "genericError": {
+    "message": "Hata"
+  },
+  "genericOff": {
+    "message": "kapalı"
+  },
+  "genericOn": {
+    "message": "açık"
+  },
+  "genericUseGlobal": {
+    "message": "global ayarı kullan"
+  },
+  "hashPatternWarning": {
+    "message": "\"#\" patterns work only when initially opening the site or reloading the tab: $1"
+  },
+  "headerRecycleBin": {
+    "message": "Geri Dönüşüm Kutusu"
+  },
+  "helpForLocalFile": {
+    "message": "Sürüklenip bırakılan yerel betikler için talimatları göster"
+  },
+  "hintForBatchAction": {
+    "message": "eşleşen $1 betik"
+  },
+  "hintInputURL": {
+    "message": "URL Girdisi:"
+  },
+  "hintRecycleBin": {
+    "message": "Kaldırılan betikler 7 gün boyunca burada listelenecek ve tutulacaktır."
+  },
+  "hintUseDownloadURL": {
+    "message": "@downloadURL kullan"
+  },
+  "hintVacuum": {
+    "message": "Fazlalığı atın ve eksik kaynakları önbellekte yeniden yüklemeyi deneyin."
+  },
+  "install": {
+    "message": "Yükle"
+  },
+  "installFrom": {
+    "message": "$1 sitesinden yükle"
+  },
+  "installOptionTrackTooltip": {
+    "message": "Firefox 68 ve sonrasında kaynak dosyası sekmesi açık tutulmalıdır."
+  },
+  "labelAdvanced": {
+    "message": "Gelişmiş"
+  },
+  "labelAllowUpdate": {
+    "message": "Güncellemeye izin ver"
+  },
+  "labelAuthor": {
+    "message": "Geliştiren: "
+  },
+  "labelAutoReloadCurrentTab": {
+    "message": "Bir betiği menüden kapattığımda/açtığımda geçerli sekmeyi yenile"
+  },
+  "labelAutoUpdate": {
+    "message": "Betik güncellemelerini $1 günde bir kontrol et. Kapatmak isterseniz 0 yazın"
+  },
+  "labelBackupMaintenance": {
+    "message": "Yedekleme ve Bakım"
+  },
+  "labelBadge": {
+    "message": "Rozette göster: "
+  },
+  "labelBadgeColors": {
+    "message": "Rozet renkleri: "
+  },
+  "labelBadgeNone": {
+    "message": "hiçbir şey"
+  },
+  "labelBadgeTotal": {
+    "message": "çalışan betik sayısı"
+  },
+  "labelBadgeUnique": {
+    "message": "çalışan eşsiz betik sayısı"
+  },
+  "labelBlacklist": {
+    "message": "Kara Liste"
+  },
+  "labelContributors": {
+    "message": "Katkıda bulunanlar"
+  },
+  "labelCurrentLang": {
+    "message": "Geçerli dil: "
+  },
+  "labelCustomCSS": {
+    "message": "Özel Stil"
+  },
+  "labelDownloadURL": {
+    "message": "İndirme URL'si:"
+  },
+  "labelEditValue": {
+    "message": "Betik değerini düzenliyorsunuz"
+  },
+  "labelEditValueAll": {
+    "message": "Betik değer deposunu düzenliyorsunuz"
+  },
+  "labelEditor": {
+    "message": "Düzenleyici"
+  },
+  "labelEnabledScriptsOnly": {
+    "message": "yalnızca etkin betikler"
+  },
+  "labelExclude": {
+    "message": "@exclude kuralları"
+  },
+  "labelExcludeMatch": {
+    "message": "@exclude-match kuralları"
+  },
+  "labelExportScriptData": {
+    "message": "Betik verilerini dışarı aktar"
+  },
+  "labelExposeStatus": {
+    "message": "Yüklü sürümü kullanıcı betiği katalog sitelerine bildir: $1"
+  },
+  "labelFastFirefoxInject": {
+    "message": "Firefox'ta alternatif $1 modu"
+  },
+  "labelFastFirefoxInjectHint": {
+    "message": "Firefox 59'dan beri <document-start> komut dosyası için alternatif bir enjeksiyon yöntemi, varsayılan moddan daha hızlı. \"Eşzamanlı sayfa modu\" ile benzer şekilde bellek tüketimini de artırır, bu nedenle komut dosyalarınız bu seçenek olmadan düzgün çalışıyorsa devre dışı bırakmak isteyebilirsiniz."
+  },
+  "labelFeedback": {
+    "message": "Geri bildirim"
+  },
+  "labelFilterSort": {
+    "message": "$1 sırala"
+  },
+  "labelGeneral": {
+    "message": "Genel"
+  },
+  "labelHelpTranslate": {
+    "message": "Çeviriye yardımcı olun"
+  },
+  "labelHomepage": {
+    "message": "Ana sayfa"
+  },
+  "labelHomepageURL": {
+    "message": "Ana sayfa URL'si:"
+  },
+  "labelIconURL": {
+    "message": "Simge URL'si"
+  },
+  "labelImportScriptData": {
+    "message": "Betik verilerini içeri aktar"
+  },
+  "labelImportSettings": {
+    "message": "Ayarları içeri aktar"
+  },
+  "labelInclude": {
+    "message": "@include kuralları"
+  },
+  "labelInjectionMode": {
+    "message": "Enjeksiyon modu: "
+  },
+  "labelInstall": {
+    "message": "Betik yükleniyor"
+  },
+  "labelKeepOriginal": {
+    "message": "Orijinalini koru"
+  },
+  "labelLastUpdatedAt": {
+    "message": "Son güncelleme: $1 "
+  },
+  "labelLineNumber": {
+    "message": "Satır no: "
+  },
+  "labelMatch": {
+    "message": "@match kuralları"
+  },
+  "labelName": {
+    "message": "İsim:"
+  },
+  "labelNoFrames": {
+    "message": "Frame içinde çalıştır:"
+  },
+  "labelNoName": {
+    "message": "İsimsiz"
+  },
+  "labelNoSearchScripts": {
+    "message": "Hiç betik bulunamadı."
+  },
+  "labelNotifyThisUpdated": {
+    "message": " ve bildir:"
+  },
+  "labelNotifyUpdates": {
+    "message": "Betik güncellemelerini bildir"
+  },
+  "labelNotifyUpdatesGlobal": {
+    "message": "betiklerin özel bildirim ayarlarını görmezden gel (düzenleyicideki \"ayarlar\" sekmesindeki)"
+  },
+  "labelPopupSort": {
+    "message": "Açılır penceredeki betikleri $1 sırala"
+  },
+  "labelPrivacyPolicy": {
+    "message": "Gizlilik Politikası"
+  },
+  "labelReinstall": {
+    "message": "Betik yeniden yükleniyor"
+  },
+  "labelRelated": {
+    "message": "İlgili bağlantılar: "
+  },
+  "labelRemovedAt": {
+    "message": "$1 tarihinde kaldırıldı"
+  },
+  "labelReplace": {
+    "message": "Değiştir: "
+  },
+  "labelRunAt": {
+    "message": "Çalışacağı an: "
+  },
+  "labelRunAtDefault": {
+    "message": "(Varsayılan)"
+  },
+  "labelScriptTemplate": {
+    "message": "Özel Betik Şablonu"
+  },
+  "labelSearch": {
+    "message": "Ara: "
+  },
+  "labelSearchScript": {
+    "message": "Betiklerde ara..."
+  },
+  "labelSettings": {
+    "message": "Ayarlar"
+  },
+  "labelShowOrder": {
+    "message": "Çalıştırma sıralarını göster"
+  },
+  "labelSync": {
+    "message": "Eşitleme"
+  },
+  "labelSyncAnonymous": {
+    "message": "Anonim hesap kullan"
+  },
+  "labelSyncAuthorize": {
+    "message": "Yetkilendir"
+  },
+  "labelSyncAuthorizing": {
+    "message": "Yetkilendiriliyor"
+  },
+  "labelSyncDisabled": {
+    "message": "Hiçbiri"
+  },
+  "labelSyncPassword": {
+    "message": "Parola: "
+  },
+  "labelSyncRevoke": {
+    "message": "İptal et"
+  },
+  "labelSyncScriptStatus": {
+    "message": "Betik durumunu eşitle"
+  },
+  "labelSyncServerUrl": {
+    "message": "Sunucu URL'si: "
+  },
+  "labelSyncService": {
+    "message": "Eşitleme hizmeti"
+  },
+  "labelSyncUsername": {
+    "message": "Kullanıcı adı: "
+  },
+  "labelTags": {
+    "message": "Etiketler (Boşlukla ayırın):"
+  },
+  "labelTheme": {
+    "message": "Tema: "
+  },
+  "labelUpdateURL": {
+    "message": "Güncelleme URL'si:"
+  },
+  "labelViewSingleColumn": {
+    "message": "Tek sütun"
+  },
+  "labelViewTable": {
+    "message": "Tablo görünümü"
+  },
+  "labelXhrInject": {
+    "message": "Eş zamanlı $1 modu"
+  },
+  "labelXhrInjectHint": {
+    "message": "Sadece sayfa yüklenmeden önce çalışması gereken bir betiğiniz varsa ve an itibarı ile geç çalışıyorsa açın. Tampermonkey'deki anında enjekte etme modunda olduğu gibi bu seçenek de artık kullanılmayan bir teknoloji olan eş zamanlı XHR kullanmaktadır, bu sebeple Chrome/Chromium tarayıcılarında devtools konsolunda uyarılar görebilirsiniz, yine de olumsuz etkiler bu durumda önemsiz olduğu için bu hataları güvenli bir şekilde görmezden gelebilirsiniz. Uyarıları, birine sağ tıklayarak tamamen gizleyebilirsiniz."
+  },
+  "labelXhrInjectNote": {
+    "message": "(gizli pencereler ve çerezleri devre dışı bırakılmış siteler hariç)"
+  },
+  "lastSync": {
+    "message": "Son eşitleme: $1"
+  },
+  "learnBlacklist": {
+    "message": "Kara liste şablonları hakkında bilgi alın."
+  },
+  "learnInjectionMode": {
+    "message": "Enjeksiyon modları hakkında bilgi alın."
+  },
+  "menuDashboard": {
+    "message": "Paneli aç"
+  },
+  "menuExclude": {
+    "message": "Dışla..."
+  },
+  "menuExcludeHint": {
+    "message": "Bu seçeneği genel ayarlardan açarsanız geçerli sekme otomatik olarak yenilenecektir.\nDeğişiklikleri diğer tüm sekmelere de uygulamak için elle yenileyiniz.\nDaha esnek ayarlar için düzenleyicinin \"Ayarlar\" sekmesini kullanın."
+  },
+  "menuFeedback": {
+    "message": "Geri bildirim"
+  },
+  "menuFindScripts": {
+    "message": "Bu siteye özel betikleri bul"
+  },
+  "menuInjectionFailed": {
+    "message": "Bazı betikler enjekte edilemedi."
+  },
+  "menuInjectionFailedFix": {
+    "message": "\"Otomatik\" modda yeniden dene"
+  },
+  "menuMatchedDisabledScripts": {
+    "message": "Eşleşen devre dışı betikler"
+  },
+  "menuMatchedFrameScripts": {
+    "message": "Alt çerçeveye özel betikler"
+  },
+  "menuMatchedScripts": {
+    "message": "Eşleşen betikler"
+  },
+  "menuNewScript": {
+    "message": "Yeni betik oluştur"
+  },
+  "menuScriptDisabled": {
+    "message": "Betikler devre dışı"
+  },
+  "menuScriptEnabled": {
+    "message": "Betikler etkin"
+  },
+  "msgCheckingForUpdate": {
+    "message": "Güncellemeler denetleniyor..."
+  },
+  "msgDateFormatInfo": {
+    "message": "MomentJS dokümantasyonunu açmak için tıklayın. Kabul edilen tokenler: $1. Metinleri korumak için [köşeli parantez] kullanın."
+  },
+  "msgErrorFetchingResource": {
+    "message": "Kaynak getirilirken hata oluştu!"
+  },
+  "msgErrorFetchingScript": {
+    "message": "Betik getirilirken hata oluştu!"
+  },
+  "msgErrorFetchingUpdateInfo": {
+    "message": "Güncelleme bilgileri alınamadı."
+  },
+  "msgErrorLoadingData": {
+    "message": "Betik verileri yüklenemedi."
+  },
+  "msgErrorLoadingDependency": {
+    "message": "Bağımlılıklar yüklenirken hata oluştu."
+  },
+  "msgImported": {
+    "message": "$1 kayıt içeri aktarıldı."
+  },
+  "msgIncognitoChanges": {
+    "message": "Gizli mod'da yaptığınız değişiklikler de ana profilinize etki eder."
+  },
+  "msgInstalled": {
+    "message": "Betik yüklendi."
+  },
+  "msgInvalidScript": {
+    "message": "Betik geçersiz!"
+  },
+  "msgLoadingData": {
+    "message": "Betik verileri yükleniyor..."
+  },
+  "msgLoadingDependency": {
+    "message": "Bağımlılıklar yükleniyor... ($1/$2)"
+  },
+  "msgMissingResources": {
+    "message": "Gerekli kaynaklar eksik."
+  },
+  "msgNamespaceConflict": {
+    "message": "Böyle bir betik ya hâlihazırda yüklü ya da geri dönüşüm kutusunda bulunuyor. Lütfen farklı bir @name ve @namespace kullanın veya çakışmayı oluşturan betiği düzenleyin."
+  },
+  "msgNamespaceConflictRestore": {
+    "message": "Aynı @name ve @namespace'e sahip bir betik zaten yüklü."
+  },
+  "msgNewVersion": {
+    "message": "Yeni sürüm bulundu."
+  },
+  "msgNoUpdate": {
+    "message": "Güncelleme bulunamadı."
+  },
+  "msgOpenUpdateErrors": {
+    "message": "Betikler güncellenirken hata oluştu. Açmak için tıklayın."
+  },
+  "msgReinstallScripts": {
+    "message": "Lütfen bu betikleri yeniden kaydedin veya yeniden yükleyin:"
+  },
+  "msgSameCode": {
+    "message": "(kod aynı)"
+  },
+  "msgScriptUpdated": {
+    "message": "Betik [$1] güncellendi!"
+  },
+  "msgShowHide": {
+    "message": "Göster/gizle"
+  },
+  "msgSyncError": {
+    "message": "Eşitleme hatası!"
+  },
+  "msgSyncInit": {
+    "message": "Başlatılıyor..."
+  },
+  "msgSyncInitError": {
+    "message": "Başlatma hatası!"
+  },
+  "msgSyncNoAuthYet": {
+    "message": "Henüz yetkilendirilmemiş."
+  },
+  "msgSyncReady": {
+    "message": "Eşitleme az sonra başlayacak..."
+  },
+  "msgSyncing": {
+    "message": "Eşitleme devam ediyor..."
+  },
+  "msgSyntaxError": {
+    "message": "Söz dizimi hatası?"
+  },
+  "msgTardyMatch": {
+    "message": "The script didn't exist or didn't match the URL when the page loaded, which happens in Single-Page Application sites like fb or instagram that are using fake navigation. You can reload the tab to run the script. To fix the script use @match for the entire site and then detect changes using MutationObserver or window.navigation API."
+  },
+  "msgUpdated": {
+    "message": "Betik güncellendi."
+  },
+  "msgUpdating": {
+    "message": "Güncelleniyor..."
+  },
+  "noValues": {
+    "message": "Kayıtlı değer yok"
+  },
+  "optionEditorWindow": {
+    "message": "Düzenleyiciyi yeni bir pencerede aç"
+  },
+  "optionEditorWindowHint": {
+    "message": "Düzenleyici penceresinin konumu yalnızca yeniden boyutlandırıldığında veya kaydedildiğinde hatırlanacaktır"
+  },
+  "optionEditorWindowSimple": {
+    "message": "Arama/adres çubuğunu gizle"
+  },
+  "optionPopup": {
+    "message": "Açılır pencere menüsü ve simgesi"
+  },
+  "optionPopupEnabledFirst": {
+    "message": "Önce etkin betikler"
+  },
+  "optionPopupGroupDisabled": {
+    "message": "Devre dışı betikleri grupla"
+  },
+  "optionPopupGroupRunAt": {
+    "message": "@run-at aşamasına göre grupla"
+  },
+  "optionPopupHideDisabled": {
+    "message": "Devre dışı betikleri gizle"
+  },
+  "optionPopupShowDisabled": {
+    "message": "Devre dışı betikleri göster"
+  },
+  "optionShowEnabledFirst": {
+    "message": "Önce etkin betikleri göster"
+  },
+  "optionUiTheme": {
+    "message": "Arayüz teması: "
+  },
+  "optionUiThemeAuto": {
+    "message": "otomatik"
+  },
+  "optionUiThemeDark": {
+    "message": "koyu"
+  },
+  "optionUiThemeLight": {
+    "message": "açık"
+  },
+  "optionUpdate": {
+    "message": "Güncelleme"
+  },
+  "readonly": {
+    "message": "Salt okunur"
+  },
+  "readonlyNote": {
+    "message": "Güncellemeleri devre dışı bırakmadığınız veya düzenlemeye izin vermediğiniz sürece, otomatik olarak güncellenen betikler salt okunurdur."
+  },
+  "readonlyOpt": {
+    "message": "Düzenlemelere izin ver"
+  },
+  "readonlyOptWarn": {
+    "message": "(bir sonraki güncelleme bunların üzerine yazacaktır)"
+  },
+  "reinstall": {
+    "message": "Yeniden yükle"
+  },
+  "reloadTab": {
+    "message": "Sekmeyi yenile"
+  },
+  "reloadTabTrackHint": {
+    "message": "Bunu etkinleştirirseniz, değişiklil algılandığında ve bu betik sekmenin URL'siyle eşleştiğinde etkin sekme yenilenir."
+  },
+  "searchCaseSensitive": {
+    "message": "Büyük-küçük harfe duyarlı"
+  },
+  "searchUseRegex": {
+    "message": "Regex kullan"
+  },
+  "sideMenuAbout": {
+    "message": "Hakkında"
+  },
+  "sideMenuInstalled": {
+    "message": "Yüklenmiş betikler"
+  },
+  "sideMenuSettings": {
+    "message": "Ayarlar"
+  },
+  "skipScripts": {
+    "message": "Kullanıcı betikleri olmadan sayfayı yenile"
+  },
+  "skipScriptsMsg": {
+    "message": "Bu sayfada kullanıcı betiklerini devre dışı bıraktınız. Betikleri çalıştırmak isterseniz sekmeyi yenileyin veya sekmede gezinin."
+  },
+  "stopTracking": {
+    "message": "İzlemeyi durdur"
+  },
+  "titleBadgeColor": {
+    "message": "Normal rozet rengi"
+  },
+  "titleBadgeColorBlocked": {
+    "message": "Enjekte edilemeyen (kara listedeki veya desteklenmeyen) sitelerde rozet rengi"
+  },
+  "titleSearchHintV2": {
+    "message": "* <kbd>Enter</kbd> key adds the text to autocomplete history\n* All conditions are case-insensitive\n* Space separated conditions can be combined\n* Search by metadata: <code>\"Awesome Script\" \"Description\"</code>\n* Search by tags: <code>#tag1 #tag2</code>\n* Search by script name: <code>name:\"awesome name\"</code>\n* Search by script code: <code>code:\"awesome code\"</code>\n* Negative search: <code>!#tag2 !name:\"unwanted\"</code>\n* Regular expressions: <code>/\\w+?/</code>, <code>/\\w+?/gi</code>, <code>name:/\\w+?/</code>, <code>name+re:\"\\w+? with space\"</code>"
+  },
+  "trackEdits": {
+    "message": "Harici düzenlemeleri izle"
+  },
+  "trackEditsNote": {
+    "message": "Düzenlemelerinizi yerel dosyada izlemek için bu sayfayı açık tutun"
+  },
+  "updateListedCmd": {
+    "message": "Betikleri güncelle ($1)"
+  },
+  "updateScript": {
+    "message": "Güncelle"
+  },
+  "updateScriptsAll": {
+    "message": "Tüm betikleri güncelle"
+  },
+  "updateScriptsInTab": {
+    "message": "Geçerli sekmedeki betikleri güncelle"
+  },
+  "valueLabelKey": {
+    "message": "Anahtar (string)"
+  },
+  "valueLabelValue": {
+    "message": "Değer (JSON biçiminde serileştirilmiş)"
+  },
+  "valueLabelValueAll": {
+    "message": "Tüm değerler (JSON biçiminde serileştirilmiş)"
+  }
+}
