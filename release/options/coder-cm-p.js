@@ -327,8 +327,47 @@
         }
     `;
 
+    function compareVersions(a, b) {
+      if (a === b) return 0;
+      // This regex splits a version “part” into up to two numeric sections and two string sections.
+      const re = /^(\d*)(\D*)(\d*)(\D*)$/;
+      const partsA = a.split('.');
+      const partsB = b.split('.');
+      for (let i = 0; i < partsA.length; i++) {
+        // For missing parts, use an empty string.
+        const partA = partsA[i];
+        const partB = partsB[i] || "";
+        // Simulate parseVersionPart:
+        // If the part is falsy (undefined or empty), treat it as if it were "0" (for numeric groups)
+        // with no extra string.
+        const mA = partA ? re.exec(partA) : ["", "0", "", "0", ""];
+        const mB = partB ? re.exec(partB) : ["", "0", "", "0", ""];
+        // Compare the numeric groups (the 1st and 3rd captured groups)
+        for (const j of [1, 3]) {
+          const numA = parseInt(mA[j] || "0", 10);
+          const numB = parseInt(mB[j] || "0", 10);
+          if (numA !== numB) return numA > numB ? 1 : -1;
+        }
+        // Compare the string groups (the 2nd and 4th captured groups)
+        // According to the rule: a non‐empty string is “less” than an empty one.
+        for (const j of [2, 4]) {
+          const strA = mA[j] || "";
+          const strB = mB[j] || "";
+          if (strA && !strB) return -1;
+          if (!strA && strB) return 1;
+          if (strA !== strB) return strA > strB ? 1 : -1;
+        }
+      }
+      // If all of a’s parts match b’s parts but b has additional parts, b is considered greater.
+      return partsB.length > partsA.length ? -1 : 0;
+    }
+    
+
     const firstInjection = async () => {
 
+      const versionCodeM = /monaco-editor\/([\d\.]+)\/min/.exec(vsPath);
+      const versionCode = versionCodeM ? versionCodeM[1] : '';
+      const below_0_52_0 = versionCode ? ((compareVersions(versionCode, '0.52.0') < 0)) : false;
 
       // https://microsoft.github.io/vscode-codicons/dist/codicon.ttf
 
@@ -344,7 +383,7 @@
       // Dynamically load CSS and JS
       await loadResourceByURL('css', `${vsPath}/editor/editor.main.css`, urlMap);
       await loadResourceByURL('js', `${vsPath}/loader.js`, urlMap);
-      await loadResourceByURL('js', `${vsPath}/editor/editor.main.nls.js`, urlMap);
+      if (!below_0_52_0) await loadResourceByURL('js', `${vsPath}/editor/editor.main.nls.js`, urlMap);
       await loadResourceByURL('js', `${vsPath}/editor/editor.main.js`, urlMap);
 
       await loadResourceByURL('js', `${vsPath}/basic-languages/javascript/javascript.js`, urlMap);

@@ -257,11 +257,14 @@ jobs:
       if: env.skip_rest == 'false'
       id: create_release
       run: |
+        # Extract the base version (e.g. "v1.2.0" from "v1.2.0-legacy")
+        releaseVersion=$(echo "${{ env.vmVersion }}" | cut -d '-' -f 1)
+
         gh release create "v${{ env.vmVersion }}" \
           --draft=false \
           --prerelease=true \
           --title "Violentmonkey Modified ver ${{ env.vmVersion }}" \
-          --notes "[https://github.com/violentmonkey/violentmonkey/releases/tag/v${{ env.vmVersion }}](https://github.com/violentmonkey/violentmonkey/releases/tag/v${{ env.vmVersion }})"
+          --notes "[https://github.com/violentmonkey/violentmonkey/releases/tag/v${releaseVersion}](https://github.com/violentmonkey/violentmonkey/releases/tag/v${releaseVersion})"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
