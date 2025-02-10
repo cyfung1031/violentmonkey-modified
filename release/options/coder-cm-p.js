@@ -174,26 +174,43 @@
 
 
           if (type === 'css') {
-            var link = document.createElement('link');
+            const link = document.createElement('link');
             link.dataset.url = url;
-            var onload = function () {
+            const onload = function () {
               link.removeEventListener('load', onload, false);
+              link.removeEventListener('error', onerror, false);
               if (urlMap) urlMap.set(url, bu);
               resolve(bu);
             }
+            const onerror = function () {
+              link.removeEventListener('load', onload, false);
+              link.removeEventListener('error', onerror, false);
+              if (urlMap) urlMap.set(url, bu);
+              resolve(bu);
+            }
+            
             link.addEventListener('load', onload, false);
+            link.addEventListener('error', onerror, false);
             link.rel = 'stylesheet';
             link.href = bu;
             document.head.appendChild(link);
           } else if (type === 'js') {
-            var script = document.createElement('script');
+            const script = document.createElement('script');
             script.dataset.url = url;
-            var onload = function () {
+            const onload = function () {
               script.removeEventListener('load', onload, false);
+              script.removeEventListener('error', onerror, false);
+              if (urlMap) urlMap.set(url, bu);
+              resolve(bu);
+            }
+            const onerror = function () {
+              script.removeEventListener('load', onload, false);
+              script.removeEventListener('error', onerror, false);
               if (urlMap) urlMap.set(url, bu);
               resolve(bu);
             }
             script.addEventListener('load', onload, false);
+            script.addEventListener('error', onerror, false);
             script.src = bu;
             document.head.appendChild(script);
           }
