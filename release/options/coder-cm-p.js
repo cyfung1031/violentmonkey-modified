@@ -128,7 +128,7 @@
       textarea.select();
 
       const p = nextCopyPromise = new PromiseExternal();
-      document.execCommand('copy');
+      setTimeout(() => document.execCommand('copy'), 100);
 
       await p.then();
 
@@ -362,8 +362,97 @@
       return partsB.length > partsA.length ? -1 : 0;
     }
     
+    let diffRecords = null;
+
+    function diffEntries(entries1, entries2) {
+      const obj1 = Object.fromEntries(entries1);
+      const obj2 = Object.fromEntries(entries2);
+    
+      const added = {};
+      const removed = {};
+      const modified = {};
+    
+      // Check for added or modified keys
+      for (const [key, value] of Object.entries(obj2)) {
+        if (!(key in obj1)) {
+          added[key] = value;
+        } else if (obj1[key] !== value) {
+          modified[key] = { before: obj1[key], after: value };
+        }
+      }
+    
+      // Check for removed keys
+      for (const key of Object.keys(obj1)) {
+        if (!(key in obj2)) {
+          removed[key] = obj1[key];
+        }
+      }
+    
+      return { added, removed, modified };
+    }
+
+    function diffRecordRestore() {
+      const diff = diffRecords;
+
+      for (const [key, val] of Object.entries(diff.added)) {
+        delete window[key];
+      }
+      for (const [key, val] of Object.entries(diff.modified)) {
+        window[key] = val.before;
+      }
+      for (const [key, val] of Object.entries(diff.removed)) {
+        window[key] = val;
+      }
+
+    }
+
+    function diffRecordInit() {
+      const diff = diffRecords;
+
+      for (const [key, val] of Object.entries(diff.added)) {
+        if (!(key in window)) window[key] = val;
+      }
+      for (const [key, val] of Object.entries(diff.modified)) {
+        if (key in window && window[key] === val.before) window[key] = val.after;
+      }
+      for (const [key, val] of Object.entries(diff.removed)) {
+        if (window[key] === val) delete window[key];
+      }
+
+    }
+
+    let monacoGlobal = null;
+
+    const monacoContext = async (fn) => {
+      let error = null;
+      diffRecordInit();
+      try {
+        monacoGlobal = window.monaco;
+        await fn(window.monaco);
+      } catch (e) {
+        error = e;
+      } finally {
+        diffRecordRestore();
+      }
+      if (error) throw error;
+    }
 
     const firstInjection = async () => {
+
+      if (monacoGlobal) return;
+
+      const p1 = Object.entries(window);
+      
+      // const defineProperty = Object.defineProperty;
+      // Object.defineProperty = function(){
+      //   // if(arguments[1]
+      //   console.log(...arguments)
+      //   return defineProperty.apply(this, arguments);
+      // }
+      window.define = window.define;
+      window.monaco = window.monaco;
+      window.ts = window.ts;
+      window.AMDLoader = window.AMDLoader;
 
       const versionCodeM = /monaco-editor\/([\d\.]+)\/min/.exec(vsPath);
       const versionCode = versionCodeM ? versionCodeM[1] : '';
@@ -397,6 +486,21 @@
 
       addCssText('rmbnctzOOksi', cssText01);
 
+      // Object.defineProperty = defineProperty;
+
+      const p2 = Object.entries(window);
+      const diff = diffEntries(p1,p2);
+      diffRecords = diff;
+
+      monacoGlobal = window.monaco;
+      if (!monacoGlobal) {
+        console.warn('monacoGlobal is null')
+      }
+      
+      diffRecordRestore();
+
+      // console.log(194, diff)
+      // console.log(195,window.define)
 
     };
 
@@ -434,7 +538,7 @@
         oldValue = value;
 
         const theme = document.documentElement.hasAttribute('dark') ? 'vs-dark' : 'vs';
-        monaco.editor.setTheme(theme);
+        monacoGlobal.editor.setTheme(theme);
 
         containerSetup(container);
 
@@ -474,8 +578,8 @@
       cmObj && globalModify(1);
       if (!isInjected) await firstInjection();
 
-      monaco.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign({
-        target: monaco.languages.typescript.ScriptTarget.ES2018,
+      monacoGlobal.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign({
+        target: monacoGlobal.languages.typescript.ScriptTarget.ES2018,
       }, compilerOptions));
 
       const container = document.createElement('div');
@@ -496,7 +600,7 @@
       const monacoLang = monacoLangs[codeLang];
 
       const value0 = cmTextArea.value;
-      monaco.editor.onDidCreateEditor(function (event) {
+      monacoGlobal.editor.onDidCreateEditor(function (event) {
         if (byPass || !cmObj) return;
         const container = ((elmSet || 0).container || 0);
         if (!container) return;
@@ -505,7 +609,7 @@
       });
 
 
-      const editor = monaco.editor.create(container, Object.assign({
+      const editor = monacoGlobal.editor.create(container, Object.assign({
         value: '',
         language: monacoLang
       }, editorOptions));
@@ -518,7 +622,7 @@
 
 
       const theme = document.documentElement.hasAttribute('dark') ? 'vs-dark' : 'vs';
-      monaco.editor.setTheme(theme);
+      monacoGlobal.editor.setTheme(theme);
 
       // window.cm = cm;
       // window.cmBox = cmBox;
@@ -551,7 +655,7 @@
 
       getEditor = () => editor;
 
-      function updateTabSize (value){
+      function updateTabSize(value) {
         const editor = this;
         const m = /[\r\n](\x20{4}|\x20{2})[A-Za-z]+/.exec(value);
         if (m) {
@@ -566,7 +670,9 @@
       };
 
 
-    }
+
+
+  }
 
     const idlePreload = async () => {
       if (location.hash === '#settings') return;
