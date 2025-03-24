@@ -325,6 +325,10 @@
         textarea.inputarea.monaco-mouse-cursor-text[class] {
           opacity: 0;
         }
+
+        html body .edit.frame[class] {
+          margin-bottom: 20px;
+        }
     `;
 
     function compareVersions(a, b) {
